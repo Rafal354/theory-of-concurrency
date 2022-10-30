@@ -1,4 +1,4 @@
-package lab2.zad1;
+package tw.lab2.zad1;
 
 import static java.lang.System.out;
 

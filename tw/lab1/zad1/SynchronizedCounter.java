@@ -1,4 +1,4 @@
-package lab1.zad1;
+package tw.lab1.zad1;
 
 public class SynchronizedCounter extends Counter {
     @Override

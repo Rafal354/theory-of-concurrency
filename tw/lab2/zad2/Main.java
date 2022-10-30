@@ -1,4 +1,4 @@
-package lab2.zad2;
+package tw.lab2.zad2;
 
 import java.util.ArrayList;
 

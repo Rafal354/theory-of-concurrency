@@ -1,4 +1,4 @@
-package lab1.zad2;
+package tw.lab1.zad2;
 
 public class Consumer implements Runnable {
 
