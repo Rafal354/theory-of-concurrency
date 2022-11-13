@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
-        int sizeOfBuffer = 10;
-        int numberOfEmp = 10;
-        Buffer buffer = new Buffer(sizeOfBuffer);
+        int sizeOfBuffer = 100;
+        int numberOfEmp = 20;
+        int rounds = 5;
+//        Buffer buffer = new NaiveBuffer(sizeOfBuffer, rounds);
+        Buffer buffer = new FairBuffer(sizeOfBuffer, rounds);
 
         ArrayList<Thread> workers = new ArrayList<>();
 

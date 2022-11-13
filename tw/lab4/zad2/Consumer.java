@@ -1,6 +1,7 @@
 package tw.lab4.zad2;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
+import static java.lang.Math.abs;
 
 public class Consumer implements Runnable {
     private final int id;
@@ -12,10 +13,10 @@ public class Consumer implements Runnable {
     }
 
     public void run() {
-        System.out.println("Thread starting, id: " + id);
-        while (true) {
+        Random random = new Random();
+        for (int i = 0; i < buffer.getRounds(); i++) {
             try {
-                int number = ThreadLocalRandom.current().nextInt(1, buffer.getSize() / 2);
+                int number = abs(random.nextInt()) % ((buffer.getSize() + 1) / 2);
                 buffer.get(number, id);
                 Thread.sleep(1);
             } catch (InterruptedException e) {
