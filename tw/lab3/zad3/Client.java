@@ -29,6 +29,6 @@ public class Client implements Runnable {
         Thread.sleep(2000);
     }
     private void privateMatters() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(1000);
     }
 }
