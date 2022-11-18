@@ -16,9 +16,8 @@ public class Consumer implements Runnable {
         Random random = new Random();
         for (int i = 0; i < buffer.getRounds(); i++) {
             try {
-                int number = abs(random.nextInt()) % ((buffer.getSize() + 1) / 2);
+                int number = abs(random.nextInt()) % ((buffer.getSize() + 1) / 2) - 1;
                 buffer.get(number, id);
-                Thread.sleep(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

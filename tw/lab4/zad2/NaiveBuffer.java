@@ -31,7 +31,8 @@ public class NaiveBuffer extends Buffer {
 
         empty.signalAll();
         lock.unlock();
-        System.out.println("P " + (System.nanoTime() - startTime));
+        long endTime = System.nanoTime();
+        System.out.println("P " + (endTime - startTime));
     }
     public void get(int number, int id) throws InterruptedException {
 
@@ -48,7 +49,8 @@ public class NaiveBuffer extends Buffer {
 
         full.signalAll();
         lock.unlock();
-        System.out.println("C " + (System.nanoTime() - startTime));
+        long endTime = System.nanoTime();
+        System.out.println("C " + (endTime - startTime));
     }
     public int getSize() {
         return this.size;
