@@ -1,27 +1,23 @@
 package tw.lab5.zad1;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
-
+    public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
 
         int numberOfCores = Runtime.getRuntime().availableProcessors();
-
         System.out.println(numberOfCores);
 
         int[] threadsNumbers = {1, numberOfCores, 2 * numberOfCores};
-//        int[] maxIterations = {100, 500, 1000, 5000, 10000};
-        int[] maxIterations = {100};
-
+        int[] maxIterations = {100, 500, 1000, 5000};
         final int rounds = 10;
-        final int width = 500;
-        final int height = 500;
-        final int zoom = 150;
+
+        final int width = 800;
+        final int height = 600;
+        final int zoom = 200;
 
         ArrayList<Result> threadsResults = new ArrayList<>();
 
@@ -31,10 +27,13 @@ public class Main {
                 for (int taskNumber: numberOfTasks) {
                     ArrayList<Long> times = new ArrayList<>();
                     for (int i = 0; i < rounds; i++) {
-                        SingleMandelbrot singleMandelbrot = new SingleMandelbrot(threadsNumber, taskNumber, maxIter, height, width, zoom);
+                        SingleMandelbrot singleMandelbrot = new SingleMandelbrot(
+                                threadsNumber, taskNumber, maxIter, height, width, zoom
+                        );
                         long startTime = System.nanoTime();
-                        singleMandelbrot.simulate();
-                        times.add(System.nanoTime() - startTime);
+                        singleMandelbrot.calculate();
+                        long endTime = System.nanoTime();
+                        times.add(endTime - startTime);
                     }
                     int mean = (int) mean(times);
                     int standardDeviation = (int) standardDeviation(times, mean);
@@ -46,26 +45,21 @@ public class Main {
         for (Result result: threadsResults) {
             result.show();
         }
-//        System.out.println(threadsResults);
+        Excel excel = new Excel(threadsResults);
+        excel.toExcel();
     }
     private static double mean(List<Long> times) {
-        if (times.isEmpty()) {
-            return 0;
-        }
         double sum = 0.0;
-        for(Long num: times) {
-            sum += num;
+        for (Long number: times) {
+            sum += number;
         }
-        return sum / times.size();
+        return times.isEmpty() ? 0 : sum / times.size();
     }
     private static double standardDeviation(List<Long> times, double mean) {
-        if (times.isEmpty()) {
-            return 0;
+        double std = 0.0;
+        for (Long number: times) {
+            std += Math.pow(number - mean, 2);
         }
-        double standardDeviation = 0.0;
-        for(Long num: times) {
-            standardDeviation += Math.pow(num - mean, 2);
-        }
-        return Math.sqrt(standardDeviation / times.size());
+        return times.isEmpty() ? 0 : Math.sqrt(std / times.size());
     }
 }
