@@ -3,7 +3,7 @@ package tw.lab5.zad1;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.Callable;
 
-public class WorkerMandelbrot implements Callable<Integer> {
+public class Mandelbrot implements Callable<Integer> {
     private final int x1, y1, x2, y2;
     private final int maxIter;
     private final double zoom;
@@ -11,9 +11,9 @@ public class WorkerMandelbrot implements Callable<Integer> {
     private final int w_2;
     private final int h_2;
 
-    WorkerMandelbrot(int x1, int y1, int x2, int y2,
-                     int maxIter, int width, int height,
-                     double zoom, BufferedImage image) {
+    Mandelbrot(int x1, int y1, int x2, int y2,
+               int maxIter, int width, int height,
+               double zoom, BufferedImage image) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;

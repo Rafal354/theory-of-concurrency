@@ -1,11 +1,11 @@
 package tw.lab5.zad1;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
@@ -17,8 +17,10 @@ public class Excel {
     }
     public void toExcel() throws IOException {
 
-        XSSFWorkbook workbook = new XSSFWorkbook("src/main/java/tw/lab5/zad1/temp.xlsx");
+        FileInputStream input = new FileInputStream("src/main/java/tw/lab5/zad1/temp.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(input);
         sheet = workbook.getSheetAt(0);
+        sheet.setDefaultColumnWidth(15);
 
         ArrayList<String> headers = new ArrayList<>();
         headers.add("ITERATIONS");
@@ -30,15 +32,19 @@ public class Excel {
         createHeader(headers);
         createTable();
 
-        FileOutputStream out = new FileOutputStream("src/main/java/tw/lab5/zad1/results.xlsx");
-        workbook.write(out);
-        out.close();
+        FileOutputStream output = new FileOutputStream("src/main/java/tw/lab5/zad1/results.xlsx");
+        workbook.write(output);
+        output.close();
 }
     private void createHeader(List<String> headers) {
         int position = 0;
         Row row = sheet.createRow(0);
+        CellStyle cellStyle = row.getSheet().getWorkbook().createCellStyle();
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
         for (String name: headers) {
-            row.createCell(position++).setCellValue(name);
+            Cell cell = row.createCell(position++);
+            cell.setCellValue(name);
+            cell.setCellStyle(cellStyle);
         }
     }
     private void createTable() {

@@ -9,11 +9,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class SingleMandelbrot {
+public class MandelbrotManager {
     private final int threadNumber;
     private final int taskNumber;
     private final int maxIter;
@@ -22,7 +20,7 @@ public class SingleMandelbrot {
     private final double zoom;
     private final BufferedImage image;
 
-    SingleMandelbrot(int threadNumber, int taskNumber, int maxIter, int height, int width, double zoom) {
+    MandelbrotManager(int threadNumber, int taskNumber, int maxIter, int height, int width, double zoom) {
         this.threadNumber = threadNumber;
         this.taskNumber = taskNumber;
         this.maxIter = maxIter;
@@ -48,7 +46,7 @@ public class SingleMandelbrot {
 
             for (int i = 0; i < taskNumber; i++) {
                 y2 = min(y1 + step - 1, height - 1);
-                WorkerMandelbrot worker = new WorkerMandelbrot(0, y1, width - 1, y2, maxIter, width, height, zoom, image);
+                Mandelbrot worker = new Mandelbrot(0, y1, width - 1, y2, maxIter, width, height, zoom, image);
                 Future<Integer> value = executor.submit(worker);
                 codes.add(value);
                 y1 += step;
@@ -56,7 +54,7 @@ public class SingleMandelbrot {
         } else {
             for (int y = 0; y < height; y++)
                 for (int x = 0; x < width; x++) {
-                    WorkerMandelbrot worker = new WorkerMandelbrot(x, y, x, y, maxIter, width, height, zoom, image);
+                    Mandelbrot worker = new Mandelbrot(x, y, x, y, maxIter, width, height, zoom, image);
                     Future<Integer> value = executor.submit(worker);
                     codes.add(value);
                 }

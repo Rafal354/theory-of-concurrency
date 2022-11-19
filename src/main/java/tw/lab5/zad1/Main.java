@@ -27,11 +27,11 @@ public class Main {
                 for (int taskNumber: numberOfTasks) {
                     ArrayList<Long> times = new ArrayList<>();
                     for (int i = 0; i < rounds; i++) {
-                        SingleMandelbrot singleMandelbrot = new SingleMandelbrot(
+                        MandelbrotManager mandelbrotManager = new MandelbrotManager(
                                 threadsNumber, taskNumber, maxIter, height, width, zoom
                         );
                         long startTime = System.nanoTime();
-                        singleMandelbrot.calculate();
+                        mandelbrotManager.calculate();
                         long endTime = System.nanoTime();
                         times.add(endTime - startTime);
                     }
